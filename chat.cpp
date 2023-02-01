@@ -1,6 +1,6 @@
 #include "chat.h"
 
-
+//new
 
 void chat::startMenu()								//начальное меню
 {
