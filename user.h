@@ -40,7 +40,6 @@ public:
 	
 };
 
-
 class userBox
 {
 	int size{};

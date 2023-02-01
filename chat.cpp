@@ -82,6 +82,7 @@ void chat::registerUser()							//регистрация пользователя
 		startMenu();
 	}
 }
+
 void chat::signUp()							//вход 
 {
 	string login, pass;
@@ -103,7 +104,6 @@ void chat::signUp()							//вход
 	userMenu();
 
 }
-
 
 void chat::writeSms()
 {

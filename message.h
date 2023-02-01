@@ -29,7 +29,6 @@ public:
 	}
 };
 
-
 class messageBox								//почтовый ящик (контейнер)
 {
 	int size{};
