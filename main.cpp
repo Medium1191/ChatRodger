@@ -26,7 +26,6 @@ int main()
 	{
 		a.startMenu();
 	} while (a.getInChat());
-	_getch();
 
 	return 0;
 }
