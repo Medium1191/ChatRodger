@@ -2,8 +2,12 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <conio.h>
+#include <stdio.h>
+#include <Windows.h>
 
 using namespace std;
+
 
 class user
 {
@@ -34,6 +38,8 @@ public:
 	
 	friend ostream& operator <<(ostream& os, user& other)
 	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hConsole, 6);
 		os << "ѕользователь - " << other.login << ", им€ - " << other.name << endl;
 		return os;
 	}
@@ -57,6 +63,8 @@ public:
 	{
 		for (int i = 0; i < size; i++)					// проверка логина на уникальность
 		{
+			HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+			SetConsoleTextAttribute(hConsole, 12);
 			if (users[i].getlogin() == login) throw "ѕользователь с таким логином уже существует!";
 		}
 
@@ -76,6 +84,8 @@ public:
 	}
 	void showUsers()								// вывод списка пользователей в базе
 	{
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hConsole, 22);
 		cout << "============================================================" << endl;
 		cout << "—писок пользователей " << endl;
 		cout << "============================================================" << endl;
@@ -103,6 +113,8 @@ public:
 				
 			}
 		}
+		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		SetConsoleTextAttribute(hConsole, 12);
 		throw "Ќеверный логин или пароль!";
 	}
 };

@@ -19,6 +19,6 @@ public:
 	void signUp();
 	//void readSms();
 	void writeSms();
-
+	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 };
 
