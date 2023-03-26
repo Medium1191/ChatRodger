@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <conio.h>
 #include <stdio.h>
+#include "message.h"
 
 
 //new
@@ -42,7 +43,7 @@ void chat::userMenu()					//меню пользователя после входа
 	case 1:
 		SetConsoleTextAttribute(hConsole, 16);
 		cout << "============================================================" << endl;
-		chatMessages.readSms(UserLogin);
+		readSms(UserLogin);
 		SetConsoleTextAttribute(hConsole, 16);
 		cout << "============================================================" << endl;
 		userMenu();
@@ -61,7 +62,8 @@ void chat::userMenu()					//меню пользователя после входа
 		userMenu();
 		break;
 	case 3:
-		chatUsers.showUsers();
+		for (int i = 0; i < chatUsers.size(); i++)
+			cout << chatUsers[i];
 		userMenu();
 	case 4:
 		cout << endl;
@@ -84,7 +86,8 @@ void chat::registerUser()							//регистрация пользователя
 	cin >> pass;
 	try
 	{
-		chatUsers.addUser(login, name, pass);
+		user x(login, name, pass);
+		chatUsers.push_back(x);
 		SetConsoleTextAttribute(hConsole, 10);
 		cout << "Вы успешно зарегистрировались" << endl;
 		startMenu();
@@ -107,7 +110,8 @@ void chat::signUp()							//вход
 	cin >> pass;
 	try
 	{
-		UserLogin = chatUsers.enterUser(login, pass);
+
+		UserLogin = enterUser(login, pass);
 	}
 	catch (const char* n)
 	{
@@ -121,6 +125,16 @@ void chat::signUp()							//вход
 
 }
 
+void chat::readSms(string login)
+{
+	vector<message>::iterator it = chatMessages.begin();
+	for (int i =0; it!= chatMessages.end();it++)
+	{
+		if (it[i].getFrom() == login)
+			it[i].readMessage();
+	}
+}
+
 void chat::writeSms()
 {
 	bool userInBase = false;
@@ -130,7 +144,7 @@ void chat::writeSms()
 	cin >> to;
 	SetConsoleTextAttribute(hConsole, 12);
 	if (UserLogin == to) throw "вы не можете отправить сообщение самому себе!";
-	for (int i = 0; i < chatUsers.getSize(); i++)
+	for (int i = 0; i < chatUsers.size(); i++)
 	{
 		
 		if(chatUsers[i].getlogin() != to && to != "all") userInBase = false;
@@ -150,5 +164,19 @@ void chat::writeSms()
 	getline(cin, sms);  //в одиночку getline почемуто не срабатывает
 	getline(cin, sms);
 	//cin >> sms;
-	chatMessages.addMessage(UserLogin, to, sms);
+	message x(UserLogin, to, sms);
+	chatMessages.push_back(x);
+	//chatMessages.push_back(UserLogin, to, sms);
+}
+
+string chat::enterUser(string login, string pass)
+{
+	for (int i = 0; i < chatUsers.size(); i++)
+	{
+		if (chatUsers[i].getlogin() == login)
+			if (chatUsers[i].getPass() == pass)
+				return login;
+			else throw "Неверный пароль!";
+	}
+	throw "Такого пользователя нет!";
 }
